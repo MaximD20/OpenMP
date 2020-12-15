@@ -253,21 +253,6 @@ void parallelCalc(int* a, int * b, int N,int n_sect)
 			}
 		}
 	}
-#pragma omp parallel shared(a,b,total)
-	{
-#pragma omp for private(i,sp)
-		for (i = 0; i < N; i++)
-		{
-			sp = a[i] + b[i];
-#pragma omp critical(update)
-			{
-			if (sp != 0)
-			{
-					total *= sp;
-			}
-			}
-		}
-	}
 }
 int main()
 {
@@ -296,7 +281,7 @@ int main()
 		cout << "Time parallel atomic: " << end3 << endl;
 		cout << endl;
 		start3 = omp_get_wtime();
-		parallelCalcA(a, b, N[k]);
+		parallelCalcB(a, b, N[k]);
 		end3 = omp_get_wtime() - start3;
 		cout << "Time parallel critical: " << end3 << endl;
 		cout << endl;
